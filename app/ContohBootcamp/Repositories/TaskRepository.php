@@ -54,4 +54,74 @@ class TaskRepository
 		$id = $this->tasks->save($editedData);
 		return $id;
 	}
+
+	/**
+	 * Hapus task
+	 */
+	public function deleteTask(string $taskId)
+	{
+		$this->tasks->deleteQuery(['_id' => $taskId]);
+	}
+
+	/**
+	 * Menugaskan task ke pengguna
+	 */
+	public function assignTask(string $taskId, string $assigned)
+	{
+		$existTask = $this->tasks->find(['_id' => $taskId]);
+
+		if ($existTask){
+			$existTask['assigned'] = $assigned;
+			$this->tasks->save($existTask);
+		}
+	}
+
+	/**
+	 * Unassign task
+	 */
+	public function unassignTask(string $taskId)
+	{
+		$existTask = $this->tasks->find(['_id' => $taskId]);
+
+		if ($existTask){
+			$existTask['assigned'] = null;
+			$this->tasks->save($existTask);
+		}
+	}
+
+	/**
+	 * Membuat subtask didalam task
+	 */
+	public function createSubTask(string $taskId, array $subTaskData)
+	{
+		$existTask = $this->tasks->find(['_id' => $taskId]);
+
+		if ($existTask){
+			$subtasks = isset($existTask['subtaks']) ? $existTask['subtasks'] : [];
+			$subtasks[] = [
+				'_id' => (string) new \MongoDB\BSON\ObjectId(),
+				'title' => $subTaskData['title'],
+				'description' => $subTaskData['description']
+			];
+			$existTask['subtaks'] = $subtasks;
+			$this->tasks->save($existTask);
+		}
+	}
+
+	/**
+	 * Menghapus Subtask
+	 */
+	public function deleteSubTask(string $taskId, string $subTaskId)
+	{
+		$existTask = $this->tasks->find(['_id' => $taskId]);
+
+		if ($existTask){
+			$subtasks = isset($existTask['subtaks']) ? $existTask['subtaks'] : [];
+			$subtasks = array_filter($subtasks, function ($subtask) use ($subTaskId){
+				return $subtask['_id'] != $subTaskId;
+			});
+			$existTask['subtaks'] = array_values($subtasks);
+			$this->tasks->save($existTask);
+		}
+	}
 }
