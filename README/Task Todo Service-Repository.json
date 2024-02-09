@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c9662cf2-2893-4f63-8dc7-5e65ba0addfc",
+		"_postman_id": "0d1a34f5-2d5e-469e-9c4e-46539398f90e",
 		"name": "Bootcamp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "18557314"
+		"_exporter_id": "22087046"
 	},
 	"item": [
 		{
@@ -61,7 +61,7 @@
 				{
 					"name": "Update Task",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -177,7 +177,7 @@
 				{
 					"name": "Delete Subtask",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -206,7 +206,7 @@
 				{
 					"name": "Delete Task",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
